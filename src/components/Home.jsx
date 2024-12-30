@@ -1,14 +1,23 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 const Home = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (!token && pathname === "/") {
+      navigate("/auth/login");
+    }
+  }, [token]);
   return (
     <div>
       <div>
         <nav>
-          <Link to="/registeruser">
+          <Link to="/auth/registeruser">
             <li>register</li>
           </Link>
-          <Link to="/login">
+          <Link to="/auth/login">
             <li>login</li>
           </Link>
           <Link to="/">
